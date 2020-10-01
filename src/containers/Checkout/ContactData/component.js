@@ -4,94 +4,12 @@ import classes from "./style.module.css";
 import axios from "../../../axios-orders";
 import Spinner from "../../../components/UI/Spinner/component";
 import Input from "../../../components/UI/Input/component";
+import data from "../../../constants/orderFormLayout";
+import { connect } from "react-redux";
 
 class ContactData extends Component {
   state = {
-    orderForm: {
-      name: {
-        elementType: "input",
-        elementConfig: {
-          type: "text",
-          placeholder: "Your Name"
-        },
-        value: "",
-        validation: {
-          required: true
-        },
-        valid: false,
-        touched: false
-      },
-      street: {
-        elementType: "input",
-        elementConfig: {
-          type: "text",
-          placeholder: "Street Name"
-        },
-        value: "",
-        validation: {
-          required: true
-        },
-        valid: false,
-        touched: false
-      },
-      zipCode: {
-        elementType: "input",
-        elementConfig: {
-          type: "text",
-          placeholder: "Post Code"
-        },
-        value: "",
-        validation: {
-          required: true,
-          minLength: 6,
-          maxLength: 8
-        },
-        valid: false,
-        touched: false
-      },
-      country: {
-        elementType: "input",
-        elementConfig: {
-          type: "text",
-          placeholder: "Country"
-        },
-        value: "",
-        validation: {
-          required: true
-        },
-        valid: false,
-        touched: false
-      },
-      email: {
-        elementType: "input",
-        elementConfig: {
-          type: "email",
-          placeholder: "Your Email Address"
-        },
-        value: "",
-        validation: {
-          required: true
-        },
-        valid: false
-      },
-      deliveryMethod: {
-        elementType: "select",
-        elementConfig: {
-          options: [
-            {
-              value: "fastest",
-              displayValue: "Fastest"
-            },
-            {
-              value: "cheapest",
-              displayValue: "Cheapest"
-            }
-          ]
-        },
-        value: "fastest",
-        valid: true
-      }
-    },
+    orderForm: data.orderForm,
     loading: false,
     formIsValid: false
   };
@@ -106,7 +24,7 @@ class ContactData extends Component {
       ].value;
     }
     const order = {
-      ingredients: this.props.ingredients,
+      ingredients: this.props.ings,
       price: this.props.price,
       orderData: formData
     };
@@ -199,4 +117,10 @@ class ContactData extends Component {
   }
 }
 
-export default ContactData;
+const mapStateToProps = state => {
+  return {
+    ings: state.ingredients,
+    price: state.totalPrice
+  };
+};
+export default connect(mapStateToProps)(ContactData);

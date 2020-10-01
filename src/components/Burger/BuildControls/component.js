@@ -3,10 +3,10 @@ import classes from "./style.module.css";
 import BuildControl from "./BuildControl/component";
 
 const controls = [
-  { label: "Salad", type: "salad" },
-  { label: "Bacon", type: "bacon" },
-  { label: "Cheese", type: "cheese" },
-  { label: "Meat", type: "meat" },
+  { label: "salad", type: "salad" },
+  { label: "bacon", type: "bacon" },
+  { label: "cheese", type: "cheese" },
+  { label: "meat", type: "meat" }
 ];
 
 const BuildControls = ({
@@ -21,7 +21,7 @@ const BuildControls = ({
     <p>
       Current Price: <strong>{price.toFixed(2)}</strong>
     </p>
-    {controls.map((ctrl) => (
+    {controls.map(ctrl => (
       <BuildControl
         key={ctrl.label}
         label={ctrl.label}
@@ -30,9 +30,10 @@ const BuildControls = ({
         disabled={disabled[ctrl.type]}
       />
     ))}
-    <button className={classes.OrderButton} 
-    disabled={!purchaseable}
-    onClick={purchasing}
+    <button
+      className={classes.OrderButton}
+      disabled={!purchaseable}
+      onClick={purchasing}
     >
       ORDER NOW
     </button>
