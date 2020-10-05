@@ -9,6 +9,7 @@ import { connect } from "react-redux";
 import * as actions from "../../store/actions/index";
 import withErrorHandler from "../../hoc/withErrorHandler/component";
 import axios from "../../axios-orders";
+
 class BurgerBuilder extends Component {
     state = {
         purchasing: false,
@@ -18,9 +19,14 @@ class BurgerBuilder extends Component {
         this.props.onInitIngredients();
     }
     purchaseHandler = () => {
-        this.setState({
-            purchasing: true,
-        });
+        if (this.props.isAuthenticated) {
+            this.setState({
+                purchasing: true,
+            });
+        } else {
+            this.props.onSetAuthRedirectPath('/checkout')
+            this.props.history.push("/auth")
+        }
     };
     purchaseCancelHandler = () => {
         this.setState({
@@ -68,6 +74,7 @@ class BurgerBuilder extends Component {
                         price={this.props.price}
                         purchaseable={this.updatePurchaseState(this.props.ings)}
                         purchasing={this.purchaseHandler}
+                        isAuth={this.props.isAuthenticated}
                     />
                 </Auxiliary>
             );
@@ -100,6 +107,7 @@ const mapStateToProps = (state) => {
         ings: state.burgerBuilder.ingredients,
         price: state.burgerBuilder.totalPrice,
         error: state.burgerBuilder.error,
+        isAuthenticated: state.auth.token !== null,
     };
 };
 const mapDispatchToProps = (dispatch) => {
@@ -112,6 +120,7 @@ const mapDispatchToProps = (dispatch) => {
         onIngredientsFailed: (ingredientName) =>
             dispatch(actions.fetchIngredientsFailed(ingredientName)),
         onInitPurchase: () => dispatch(actions.purchaseInit()),
+        onSetAuthRedirectPath: (path) => dispatch(actions.setAuthRedirectPath(path))
     };
 };
 

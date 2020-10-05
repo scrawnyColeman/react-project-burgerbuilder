@@ -4,7 +4,7 @@ import NavigationItems from "../NavigationItems/component";
 import HamburgerToggle from "../SideDrawer/HamburgerToggle/component";
 import classes from "./style.module.css";
 
-const Toolbar = ({toggleDrawer}) => {
+const Toolbar = ({toggleDrawer, isAuth}) => {
 
     return (
         <header className={classes.Toolbar}>
@@ -13,7 +13,7 @@ const Toolbar = ({toggleDrawer}) => {
                 <Logo />
             </div>
             <nav className={classes.DesktopOnly}>
-                <NavigationItems />
+                <NavigationItems isAuthenticated={isAuth} />
             </nav>
         </header>
     );

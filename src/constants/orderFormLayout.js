@@ -30,7 +30,7 @@ const data = {
       elementType: "input",
       elementConfig: {
         type: "text",
-        placeholder: "Post Code"
+        placeholder: "Zip Code"
       },
       value: "",
       validation: {
