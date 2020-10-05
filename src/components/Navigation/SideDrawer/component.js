@@ -5,7 +5,7 @@ import Backdrop from "../../UI/Backdrop/component";
 import NavigationItems from "../NavigationItems/component";
 import classes from "./style.module.css";
 
-const SideDrawer = ({open, closed}) => {
+const SideDrawer = ({open, closed, isAuth}) => {
     let attachedClasses = [classes.SideDrawer, classes.Close];
     if (open) {
         attachedClasses = [classes.SideDrawer, classes.Open]
@@ -13,12 +13,12 @@ const SideDrawer = ({open, closed}) => {
     return (
         <Auxiliary>
             <Backdrop show={open} clicked={closed}/>
-            <div className={attachedClasses.join(' ')}>
+            <div className={attachedClasses.join(' ')} onClick={closed}>
                 <div className={classes.Logo}>
                     <Logo />
                 </div>
                 <nav>
-                    <NavigationItems />
+                    <NavigationItems isAuthenticated={isAuth}/>
                 </nav>
             </div>
         </Auxiliary>
