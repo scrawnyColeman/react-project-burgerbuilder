@@ -23,11 +23,12 @@ const store = createStore(rootReducer, composeEnhancers(
 ));
 
 ReactDOM.render(
+  <>
   <Provider store={store}>
     <BrowserRouter>
       <App />
     </BrowserRouter>
-  </Provider>,
+  </Provider></>,
   document.getElementById("root")
 );
 

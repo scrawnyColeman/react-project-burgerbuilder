@@ -1,33 +1,34 @@
-import React, { Component } from "react";
+import React from "react";
 import Auxiliary from "../../../hoc/Auxiliary/Auxiliary";
 import Backdrop from "../Backdrop/component";
 import classes from "./style.module.css";
 
-class Modal extends Component {
-    shouldComponentUpdate(nextProps, nextState) {
-        return nextProps.show !== this.props.show || nextProps.children !== this.props.children;
-    }
-    render() {
-        return (
-            <Auxiliary>
-                <Backdrop
-                    show={this.props.show}
-                    clicked={this.props.modalClosed}
-                />
-                <div
-                    className={classes.Modal}
-                    style={{
-                        transform: this.props.show
-                            ? "translateY(0)"
-                            : "translateY(-100vh)",
-                        opacity: this.props.show ? "1" : "0",
-                    }}
-                >
-                    {this.props.children}
-                </div>
-            </Auxiliary>
-        );
-    }
-}
+const Modal = ({show, modalClosed, children}) => {
+    // shouldComponentUpdate(nextProps, nextState) {
+    //     return nextProps.show !== this.props.show || nextProps.children !== this.props.children;
+    // }
 
-export default Modal;
+    return (
+        <Auxiliary>
+            <Backdrop show={show} clicked={modalClosed} />
+            <div
+                className={classes.Modal}
+                style={{
+                    transform: show
+                        ? "translateY(0)"
+                        : "translateY(-100vh)",
+                    opacity: show ? "1" : "0",
+                }}
+            >
+                {children}
+            </div>
+        </Auxiliary>
+    );
+};
+
+export default React.memo(Modal, (prevProps, nextProps) => {
+    return (
+        nextProps.show === prevProps.show &&
+        nextProps.children === prevProps.children
+    );
+});
